@@ -1,0 +1,5 @@
+/build/
+/cmake-build*/
+/artifacts/
+*.user
+*.suo
