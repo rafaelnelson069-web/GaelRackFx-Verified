@@ -8,11 +8,20 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: windows-2022
 
     steps:
       - name: Checkout source
         uses: actions/checkout@v4
+
+      - name: Verify build tools
+        run: |
+          cmake --version
+          if (-not (Get-Command cl.exe -ErrorAction SilentlyContinue)) {
+            Write-Error "MSVC compiler not available on PATH"
+            exit 1
+          }
+        shell: pwsh
 
       - name: Configure CMake
         run: cmake -S . -B build -G "Visual Studio 17 2022" -A x64
